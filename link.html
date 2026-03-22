@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>System Breach</title>
+<style>
+body {
+  background: black;
+  color: lime;
+  font-family: monospace;
+  font-size: 18px;
+  overflow: hidden;
+}
+
+#text {
+  padding: 20px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  background: lime;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+#progressBar {
+  width: 0%;
+  height: 10px;
+  background: lime;
+  margin-top: 20px;
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% { transform: translate(2px, 2px); }
+  25% { transform: translate(-2px, -2px); }
+  50% { transform: translate(2px, -2px); }
+  75% { transform: translate(-2px, 2px); }
+  100% { transform: translate(0, 0); }
+}
+</style>
+</head>
+
+<body>
+<div id="text"></div>
+<div id="progressBar"></div>
+
+<script>
+let lines = [
+  "Connecting to network...",
+  "Bypassing firewall...",
+  "Access granted.",
+  "Injecting payload...",
+  "Uploading data...",
+  "Device compromised.",
+  "THE DEVICE IS HACKED."
+];
+
+let lineIndex = 0;
+let charIndex = 0;
+
+function typeEffect() {
+  if (lineIndex < lines.length) {
+    let currentLine = lines[lineIndex];
+
+    if (charIndex < currentLine.length) {
+      document.getElementById("text").innerHTML += currentLine.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeEffect, 40);
+    } else {
+      document.getElementById("text").innerHTML += "<br>";
+      lineIndex++;
+      charIndex = 0;
+      setTimeout(typeEffect, 400);
+    }
+  } else {
+    startProgress();
+  }
+}
+
+function startProgress() {
+  let bar = document.getElementById("progressBar");
+  let width = 0;
+
+  let interval = setInterval(() => {
+    width++;
+    bar.style.width = width + "%";
+
+    if (width >= 100) {
+      clearInterval(interval);
+      document.body.classList.add("shake");
+    }
+  }, 30);
+}
+
+typeEffect();
+</script>
+</body>
+</html>
